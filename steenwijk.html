@@ -13,7 +13,8 @@
   </div>
 
   <script>
-    const feedUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.alarmeringdroid.nl/rss/95ac79ad');
+    #const feedUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.alarmeringdroid.nl/rss/95ac79ad');
+     #const feedUrl = 'https://www.alarmeringdroid.nl/rss/95ac79ad';
 
     async function fetchFeed() {
       try {
@@ -43,7 +44,6 @@
     }
 
     fetchFeed();
-    setInterval(fetchFeed, 5000);
   </script>
 
 </body>
