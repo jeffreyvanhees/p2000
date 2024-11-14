@@ -4,46 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>P2000 Meldingen</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-black/90 text-gray-100">
+<body class="bg-gray-900 text-gray-100">
 
   <div id="rss-feed" class="container mx-auto px-4 py-8 overflow-x-auto">
     <div id="feed-entries"></div>
   </div>
 
+  <!-- Script moved here -->
   <script>
-      const feedUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.alarmeringdroid.nl/rss/9820c6a1');
-    // const feedUrl = 'https://www.alarmeringdroid.nl/rss/9820c6a1';
+    // Step 1: Fetch the RSS feed data
+// Step 1: Fetch the RSS feed data
+fetch("https://api.allorigins.win/get?url=https://alarmeringen.nl/feeds/region/ijsselland/brandweer.rss")
+  .then(response => response.json()) // Parse JSON response
+  .then(data => {
+    // Step 2: Decode Base64 content
+    const base64Content = data.contents.split("base64,")[1]; // Extract Base64 data
+    const decodedXML = atob(base64Content); // Decode from Base64
 
-    async function fetchFeed() {
-      try {
-        const response = await fetch(feedUrl);
-        const data = await response.json();
-        const xmlDoc = new DOMParser().parseFromString(data.contents, "text/xml");
+    // Step 3: Parse the XML content
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(decodedXML, "application/xml");
 
-        const feedEntries = document.getElementById("feed-entries");
-        feedEntries.innerHTML = '';
+    // Step 4: Access RSS data and dynamically create HTML for each item
+    const items = xmlDoc.getElementsByTagName("item");
+    const outputContainer = document.getElementById("feed-entries"); // Corrected container ID
 
-        Array.from(xmlDoc.getElementsByTagName("item")).forEach((item) => {
-          const title = item.getElementsByTagName("title")[0].textContent;
-          const description = item.getElementsByTagName("description")[0].textContent;
-          const pubDate = item.getElementsByTagName("pubDate")[0].textContent;
+    for (let i = 0; i < items.length; i++) {
+      const title = items[i].getElementsByTagName("title")[0].textContent;
+      const pubDate = items[i].getElementsByTagName("pubDate")[0].textContent;
+      const description = items[i].getElementsByTagName("description")[0].textContent;
 
-          feedEntries.innerHTML += `
-            <div class="mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
-              <small class="text-gray-400">${pubDate}</small>
-              <h2 class="font-bold text-lg text-gray-100">${title}</h2>
-              <p>${description}</p>
-            </div>
-          `;
-        });
-      } catch (error) {
-        console.error("Error fetching RSS feed:", error);
-      }
+      // Create the HTML structure for each RSS item
+      const itemElement = document.createElement("div");
+      itemElement.className = "mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700";
+
+      const dateElement = document.createElement("small");
+      dateElement.className = "text-gray-400";
+      dateElement.textContent = pubDate;
+
+      const titleElement = document.createElement("h2");
+      titleElement.className = "font-bold text-lg text-gray-100";
+      titleElement.textContent = title;
+
+      const descriptionElement = document.createElement("p");
+      descriptionElement.textContent = description;
+
+      // Append all elements to the item container
+      itemElement.appendChild(dateElement);
+      itemElement.appendChild(titleElement);
+      itemElement.appendChild(descriptionElement);
+
+      // Append the item to the output container
+      outputContainer.appendChild(itemElement);
     }
+  })
+  .catch(error => console.error("Error fetching or parsing the feed:", error));
 
-    fetchFeed();
   </script>
 
 </body>
