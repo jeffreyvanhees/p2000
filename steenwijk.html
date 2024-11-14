@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-  <div id="rss-feed" class="container mx-auto px-4 py-8 overflow-x-auto">
+  <div id="rss-feed" class="container mx-auto px-4 py-4 overflow-x-auto">
     <div id="feed-entries"></div>
   </div>
 
@@ -38,7 +38,7 @@ fetch("https://api.allorigins.win/get?url=https://alarmeringen.nl/feeds/region/i
 
       // Create the HTML structure for each RSS item
       const itemElement = document.createElement("div");
-      itemElement.className = "mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700";
+      itemElement.className = "mb-4 p-4 bg-gray-800 rounded border border-gray-700";
 
       const dateElement = document.createElement("small");
       dateElement.className = "text-gray-400";
