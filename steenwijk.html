@@ -14,9 +14,9 @@
 
   <!-- Script moved here -->
   <script>
-    // Step 1: Fetch the RSS feed data
+ const ms = Date.now();
 // Step 1: Fetch the RSS feed data
-fetch("https://api.allorigins.win/get?url=https://alarmeringen.nl/feeds/region/ijsselland/brandweer.rss")
+fetch("https://api.allorigins.win/get?url=https://alarmeringen.nl/feeds/region/ijsselland/brandweer.rss?cache" + ms)
   .then(response => response.json()) // Parse JSON response
   .then(data => {
     // Step 2: Decode Base64 content
