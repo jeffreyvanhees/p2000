@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>P2000 Meldingen</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/"></script>
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-zinc-900 text-zinc-100">
 
   <div id="rss-feed" class="container mx-auto px-4 py-4 overflow-x-auto">
     <div id="feed-entries"></div>
@@ -39,14 +39,14 @@ fetch("https://api.allorigins.win/get?url=https://alarmeringen.nl/feeds/region/i
 
       // Create the HTML structure for each RSS item
       const itemElement = document.createElement("div");
-      itemElement.className = "mb-4 p-4 bg-gray-800 rounded border border-gray-700";
+      itemElement.className = "mb-4 p-4 bg-zinc-800 rounded border border-zinc-700";
 
       const dateElement = document.createElement("small");
-      dateElement.className = "text-gray-400";
+      dateElement.className = "text-zinc-400";
       dateElement.textContent = pubDate;
 
       const titleElement = document.createElement("h2");
-      titleElement.className = "font-bold text-lg text-gray-100";
+      titleElement.className = "font-bold text-lg text-zinc-100";
       titleElement.textContent = title;
 
       const descriptionElement = document.createElement("p");
